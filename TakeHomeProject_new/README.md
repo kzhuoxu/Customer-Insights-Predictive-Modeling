@@ -1,74 +1,118 @@
-# JPMC Risk Program Senior Associate - Take-Home Project
+# Take-Home Project: Income Classification & Customer Segmentation
 
-This repository contains the solution for the take-home project, which involves two key tasks:
-1.  **Supervised Classification:** Predicting whether an individual's income is greater than $50k based on US Census data.
-2.  **Unsupervised Segmentation:** Identifying distinct customer personas from the same dataset for targeted marketing.
-
-The project is structured as a reproducible Python application, emphasizing a clean, modular, and well-documented workflow. The final analysis and business recommendations are detailed in the accompanying `Project_Report.pdf`.
-
----
+This repository contains solutions for two machine learning tasks using US Census data:
+1. **Binary Classification**: Predicting income levels (>$50K vs ≤$50K)
+2. **Customer Segmentation**: Creating marketing personas using unsupervised clustering
 
 ## Project Structure
 
-The repository is organized into the following directories:
+```
+├── data/                           # Raw census data files
+├── src/                           # Source code modules
+│   ├── config.py                  # Configuration and file paths
+│   ├── data_loader.py             # Data loading and initial cleaning
+│   ├── feature_engineering.py     # Feature creation and transformations
+│   ├── preprocessing.py           # ML preprocessing pipelines
+│   ├── train.py                   # Classification model training
+│   ├── segment.py                 # Segmentation model execution
+│   └── segmentation_utils.py      # Clustering utilities
+├── models/                        # Trained model artifacts
+├── outputs/                       # Generated results and visualizations
+├── plots/                         # Analysis plots and charts
+├── requirements.txt               # Python dependencies
+└── README.md                      # This file
+```
 
--   `data/`: Contains the raw census data and column information.
--   `notebooks/`: Includes the initial exploratory data analysis (EDA) and model prototyping.
--   `src/`: Contains the core, modularized Python source code for the project pipeline.
-    -   `config.py`: Centralized configuration for file paths and model parameters.
-    -   `data_loader.py`: Handles loading and initial cleaning of the dataset.
-    -   `feature_engineering.py`: A library of functions for creating new features and preparing data for modeling.
-    -   `train.py`: Script for training, evaluating, and saving the final classification model.
-    -   `segment.py`: Script for generating and profiling customer segments.
--   `requirements.txt`: A list of all necessary Python packages to run the project.
--   `README.md`: This file.
+## Setup Instructions
 
----
-
-## How to Run
-
-### 1. Setup
-
-First, clone the repository and install the required dependencies.
-
+### 1. Environment Setup
 ```bash
-# Clone the project
-git clone <your-repo-url>
-cd jpmc_take_home
+# Clone repository (if applicable)
+git clone <repository-url>
+cd <project-directory>
 
-# Install dependencies
+# Install required dependencies
 pip install -r requirements.txt
 ```
 
-### 2. Running the Classification Model
+### 2. Data Preparation
+Ensure the following files are present in the `data/` directory:
+- `census-bureau.data` - Main dataset
+- `census-bureau.columns` - Column names file
 
-To train the income prediction model, run the `train.py` script. This script will perform the full pipeline: load data, apply feature engineering, train a model (e.g., Gradient Boosting Classifier), evaluate it, and save the trained model artifact to disk.
+## Execution Instructions
 
-```bash
-python src/train.py
-```
-The script will print the final evaluation metrics (e.g., ROC AUC, F1-Score, and the confusion matrix) to the console.
+### Classification Model Training
 
-### 3. Running the Segmentation Model
-
-To generate the customer segments, run the `segment.py` script. This will preprocess the data, determine the optimal number of clusters, run K-Means, and save a CSV file containing the original data with an assigned cluster label for each individual.
+To train the income prediction model:
 
 ```bash
-python src/segment.py
+cd TakeHomeProject_new
+python -m src.train
 ```
-This script will also print a summary profile of each generated customer segment to the console, describing their key demographic and employment characteristics.
 
----
+**What this does:**
+- Loads and preprocesses census data
+- Applies feature engineering transformations
+- Trains a LightGBM classifier with optimized hyperparameters
+- Evaluates model performance on held-out test set
+- Saves trained model to `models/income_classifier_lgbm.joblib`
 
-## Core Methodologies
+**Expected Output:**
+- Model performance metrics (ROC AUC, F1-score, classification report)
+- Confusion matrix visualization
+- Trained model artifact
 
-A brief overview of the key decisions and techniques used in this project:
+### Customer Segmentation Analysis
 
-*   **Feature Engineering:** A significant focus was placed on creating intuitive, powerful features from the raw data. This included:
-    *   Grouping highly granular categorical variables (like `education` and `occupation`) into logical, lower-cardinality tiers.
-    *   Creating composite features to capture concepts like `employment_status` and `investment_profile`.
-    *   Validating feature definitions through comparative analysis (e.g., `crosstab`).
-*   **Classification:** A Gradient Boosting Machine was selected as the final model due to its high performance on tabular data and its robustness to varied feature types. The model was evaluated on key business metrics like ROC AUC and F1-score to account for class imbalance.
-*   **Segmentation:** K-Means clustering was used to segment the population. The optimal number of clusters was determined using the Elbow Method and Silhouette Analysis. Each resulting segment was profiled to create actionable business personas.
+To generate customer segments:
 
-For a detailed walkthrough of the analysis, findings, and business recommendations, please see `Project_Report.pdf`.
+```bash
+cd TakeHomeProject_new
+python -m src.segment
+```
+
+**What this does:**
+- Preprocesses data for clustering analysis
+- Applies dimensionality reduction using TruncatedSVD
+- Determines optimal number of clusters using silhouette analysis
+- Performs K-means clustering
+- Generates cluster profiles and visualizations
+- Saves segmentation results to `outputs/customer_segments.csv`
+
+**Expected Output:**
+- Optimal cluster count determination
+- Customer segment assignments
+- Cluster profile visualizations and heatmaps
+- Saved clustering model and preprocessor
+
+## Key Dependencies
+
+- **Python 3.8+**
+- **Core ML Libraries**: scikit-learn, lightgbm, pandas, numpy
+- **Visualization**: matplotlib, seaborn
+- **Utilities**: joblib (model serialization)
+
+See `requirements.txt` for complete dependency list with versions.
+
+## Output Files
+
+After successful execution, the following key files will be generated:
+
+**Classification:**
+- `models/income_classifier_lgbm.joblib` - Trained classification model
+- `outputs/final_confusion_matrix.png` - Model performance visualization
+
+**Segmentation:**
+- `outputs/customer_segments.csv` - Customer records with cluster assignments
+- `models/kmeans_model.joblib` - Trained clustering model
+- `models/segmentation_pipeline.joblib` - Complete preprocessing pipeline
+- `plots/` - Various cluster profile visualizations
+
+## Notes
+
+- All scripts use reproducible random seeds (RANDOM_STATE = 42)
+- Models are optimized for business metrics (ROC AUC for classification, silhouette score for clustering)
+- The codebase is modular and configuration-driven for easy maintenance and experimentation
+
+For detailed analysis, methodology, and business recommendations, please refer to the accompanying project report.
