@@ -1,7 +1,6 @@
 *.png
 *.csv
 *.joblib
-*.json
 *.png
 *.pyc
 __pycache__/
