@@ -32,6 +32,9 @@ MODEL_DIR = BASE_DIR / "models"
 PLOTS_DIR = BASE_DIR / "plots"
 OUTPUT_DIR.mkdir(exist_ok=True)
 MODEL_DIR.mkdir(exist_ok=True)
+PLOTS_DIR.mkdir(exist_ok=True)
+
+# Hyperparameter Tuning Artifacts
 HYPERPARAMETERS_FILE = MODEL_DIR / "best_hyperparameters.json"
 HYPERPARAMETERS_FILE_alt = MODEL_DIR / "best_hyperparameters_f1_macro.json"
 
