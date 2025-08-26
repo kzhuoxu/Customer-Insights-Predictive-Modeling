@@ -61,6 +61,7 @@ def run_segmentation():
     # 5. Determine Optimal K
     logging.info("Step 5/8: Determining the optimal number of clusters (k)...")
     best_k = choose_k(X_processed_svd, config.K_CANDIDATES)
+    best_k = 7  # Forcing k=5 based on prior knowledge; comment this line to use the chosen k
 
     # 6. Train Final K-Means Model
     logging.info(f"Step 6/8: Training final K-Means model with k={best_k}...")

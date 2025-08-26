@@ -22,7 +22,8 @@ COLUMNS_FILE = DATA_DIR / "census-bureau.columns"
 COLUMNS_TO_DROP = [
     'detailed_industry_recode',
     'detailed_occupation_recode',
-    'year'
+    'year',
+    'capital_gains', 'capital_losses', 'dividends_from_stocks'  # these will be transformed into engineered features
 ]
 
 # --- Output & Artifact Paths ---
@@ -64,13 +65,13 @@ SEGMENTATION_FEATURES = [
     # Core Demographics
     'age', 'sex', 'race',
     # Household Composition
-    'marital_stat', 'family_members_under_18', 'tax_filer_stat',
+    'marital_stat', 
     # Education & Careers
     'education_group', 'major_occupation_code', 'major_industry_code',
     # Work Intensity
     'employment_status', 'weeks_worked_in_year',
     # Financial Profile
-    'wage_per_hour', 'capital_gains', 'capital_losses', 'dividends_from_stocks',
+    'wage_per_hour', 'log_capital_gains', 'log_capital_losses', 'log_dividends_from_stocks',
     'has_investment_income', 'own_business_or_self_employed',
     # Nativity & Migration
     'citizenship', 'live_in_this_house_1_year_ago',

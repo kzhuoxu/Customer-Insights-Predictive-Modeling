@@ -7,7 +7,7 @@ This repository contains solutions for two machine learning tasks using US Censu
 ## Project Structure
 
 ```
-├── data/                           # Raw census data files
+├── data/                          # Raw census data files
 ├── src/                           # Source code modules
 │   ├── config.py                  # Configuration and file paths
 │   ├── data_loader.py             # Data loading and initial cleaning
@@ -28,8 +28,7 @@ This repository contains solutions for two machine learning tasks using US Censu
 ### 1. Environment Setup
 ```bash
 # Clone repository (if applicable)
-git clone <repository-url>
-cd <project-directory>
+git clone https://github.com/kzhuoxu/Customer-Insights-Predictive-Modeling/tree/main
 
 # Install required dependencies
 pip install -r requirements.txt

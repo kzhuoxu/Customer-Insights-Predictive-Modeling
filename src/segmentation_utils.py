@@ -64,21 +64,21 @@ def save_numerical_profile_heatmap(df_with_labels: pd.DataFrame, numerical_cols:
 
     # Normalize the data for fair comparison in the heatmap
     scaler = StandardScaler()
-    summary_scaled = scaler.fit_transform(numerical_summary)
+    summary_scaled = scaler.fit_transform(numerical_summary.T)
     
     plt.figure(figsize=(12, 8))
     sns.heatmap(
         summary_scaled,
-        annot=numerical_summary,
+        annot=numerical_summary.T,
         fmt=".2f",
         cmap="coolwarm",
-        yticklabels=numerical_summary.index,
-        xticklabels=numerical_summary.columns,
+        yticklabels=numerical_summary.columns,
+        xticklabels=numerical_summary.index,
         linewidths=.5
     )
     plt.title('Heatmap of Mean Numerical Features by Cluster (Centered & Scaled)', fontsize=16)
-    plt.xlabel('Numerical Feature')
-    plt.ylabel('Cluster')
+    plt.ylabel('Numerical Feature')
+    plt.xlabel('Cluster')
     plt.tight_layout()
     plt.savefig(output_path)
     logging.info(f"Numerical profile heatmap saved to {output_path}")

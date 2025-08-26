@@ -46,9 +46,9 @@ def create_features(df: pd.DataFrame) -> pd.DataFrame:
     
     # --- 1. Financial Profile Features ---
     # Log-transform income-related features to reduce skewness.
-    for col in ['wage_per_hour', 'capital_gains', 'capital_losses', 'dividends_from_stocks']:
+    for col in ['capital_gains', 'capital_losses', 'dividends_from_stocks']:
         if col in df.columns:
-            df[col] = df[col].apply(lambda x: np.log1p(x) if x > 0 else 0)
+            df[f"log_{col}" ] = df[col].apply(lambda x: np.log1p(x) if x > 0 else 0)
 
     # Combine capital gains and losses into a single, more powerful feature.
     df['net_capital_gain'] = df['capital_gains'] - df['capital_losses']
