@@ -1,0 +1,8 @@
+{
+    "classifier__learning_rate": 0.023010318597055907,
+    "classifier__max_depth": 8,
+    "classifier__n_estimators": 700,
+    "classifier__num_leaves": 47,
+    "classifier__reg_alpha": 0.6069593960609854,
+    "classifier__reg_lambda": 0.4468748522859245
+}
